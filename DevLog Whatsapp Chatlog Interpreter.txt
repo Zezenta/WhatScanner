@@ -1,0 +1,7 @@
+NOTAS DEL DEV WHATSAPP CHATLOG INTERPRETER:
+CSS: 1/4/2022 2:44: Tengo que ajustar el texto del botón de dark mode para que no se salga, y arreglar el botón de switch
+JS: 1/4/2022 2:45: Hay que arreglar el bug del linebreak dentro de los mensajes
+
+-Arreglar posición de la hora
+-Poner vistos
+-Linebreak bug

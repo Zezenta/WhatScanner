@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whatsapp Chatlog Interpreter</title>
+    <style>
+* { /*Estilos en general*/
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body { /*fondo fondo verde*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(
+    #00A884 0%,
+    #00A884 130px,
+    #d9dbd5 130px,
+    #d9dbd5 100%
+  );
+}
+
+.container { /*Contenedor del chat en sí*/
+  position: relative;
+  width: 1298px;
+  max-width: 100%;
+  height: calc(100vh - 40px);
+  background: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+}
+
+.container .rightSide { /*Estilizador del fondo del chat*/
+  position: relative;
+  flex: 70%;
+  background: #e5ddd5;
+} 
+
+.container .rightSide::before { /*Imagen del fondo del chat*/
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("images/pattern.png");
+  opacity: 0.06;
+}
+
+.header { /*parte de arriba, la usaré para hacer los botones de cambiar de vista de usuario, escoger archivos y cambiar idioma*/
+  position: relative;
+  width: 100%;
+  height: 80px; /*originalmente 60px*/
+  background: #ededed;
+  display:inline-block;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.message_p { /*sigue funcionando despues de eliminado*/
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message_p b { /*sigue funcionando despues de eliminado*/
+  background: #06d755;
+  color: #fff;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.message_p p { /*sigue funcionando despues de eliminado*/
+  color: #aaa;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  font-size: 0.9em;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.imgText { /*Título del nombre de usuario*/
+  font-weight: 500;
+  line-height: 1.2em;
+  margin-left: 3px;
+  margin-right: 3px  ;
+  padding-top: 8px;
+}
+
+.imgText span{ /*estilo de "online" abajo del nombre de usuario*/
+  font-size: 0.8em;
+  color: #555;
+}
+
+/* CHAT BOX */
+.chatbox { /*muy importante, no eliminar xd, analiza luego*/
+  position: relative;
+  width: 100%;
+  height: calc(100% - 80px); /*esto configura la altura del chatbox en si*/
+  padding: 50px;
+  overflow-y: auto;
+}
+
+.message { /*posicionador de cuadros de mensajes*/
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin: 5px 0;
+}
+
+.message p {  /*creador de los cuadros de colores de los mensajes*/
+  position: relative;
+  right: 0;
+  text-align: left;
+  max-width: 65%;
+  padding: 12px;
+  background: #dcf8c8;
+  border-radius: 10px;
+  font-size: 0.9em;
+}
+
+.message p::before { /*triangulito al lado de los mensajes*/
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -12px;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(
+    135deg,
+    #dcf8c6 0%,
+    #dcf8c6 50%,
+    transparent 50%,
+    transparent
+  );
+}
+
+.message p span { /*script que hace pequeña la hora en los mensajes*/
+  display: block;
+  margin-top: 5px;
+  font-size: 0.85em;
+  opacity: 0.5;
+}
+
+.my_msg { /*establece la posicion de los cuadros de mensajes enviados por el usuario1*/
+  justify-content: flex-end;
+}
+
+.friend_msg { /*establece la posicion de los cuadros de mensajes enviados por el usuario2*/
+  justify-content: flex-start;
+}
+
+.friend_msg p { /*se asegura de poner blanco los mensajes del usuario2*/
+  background: #fff;
+  text-align: left;
+}
+
+.message.friend_msg p::before { /*pone a la izquierda los triangulos al lado de los mensajes*/
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -12px;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(
+    225deg,
+    #fff 0%,
+    #fff 50%,
+    transparent 50%,
+    transparent
+  );
+}
+
+/*botones del contenedor*/
+.button1 {
+  border-radius: 10px;
+  background-color: #25D366;
+  border: none;
+  font-size: 18px;
+  padding-top: 15px;
+  padding-bottom: 1%;
+  width: 24.5%;
+  height: 50px;
+  cursor: pointer;
+  margin-top: 8px;
+  align-items: center;
+  display: inline-block;
+  white-space: nowrap;
+  float: left;
+}
+.button1 span{
+  position: absolute;
+  top: 33px;
+  left: 5 px;
+}
+
+
+
+/*boton 2*/
+.button2 {
+  border-radius: 10px;
+  background-color: #25D366;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 16px;
+  padding-top: 16px;
+  padding-bottom: 10px;
+  width: 24.5%;
+  height: 50px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin-left: 7px;
+  margin-top: 8px;
+  left: 24%;
+  position: absolute;
+}
+
+
+
+/*doble boton*/
+.button3 {
+  background-color: #128C7E; /* Green */
+  border: 1px solid #128C7E;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  color: white;
+  height: 50px;
+  width: 24.5%;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 8px;
+  align-items: center;
+  display: inline-block;
+  right: 25%;
+  position: absolute;
+}
+
+.button4 {
+  background-color: #FFFFFF; /* Green */
+  border: 1px solid #128C7E;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  color: black;
+  height: 50px;
+  width: 24.5%;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 8px;
+  align-items: center;
+  display: inline-block;
+  float: right;
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="rightSide">
+            <div class="header">
+                <div class="imgText">
+                        <button class="button1"><strong><span>Dark Mode</span></strong>
+                        </button>
+                        <input type="file" id="inputfile" class="button2">
+                        <button class="button3" id="botonusuario1" onclick="botonejecutar1()"><strong>Usuario1</strong></button>
+                        <button class="button4" id="botonusuario2" onclick="botonejecutar2()"><strong>Usuario2</strong></button>               
+                </div>
+            </div>
+
+            <!-- CHAT-BOX -->
+            <div class="chatbox" id="mensajesdetexto">
+
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript" >
+        const botonusuario1 = document.getElementById("botonusuario1");
+const botonusuario2 = document.getElementById("botonusuario2");
+var lineas;
+var seguirciclo = true;
+var nombreusuario1 = ""; //el nombre del usuario1
+var nombreusuario2 = ""; //el nombre del usuario2
+var nombreusuario1encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario1
+var nombreusuario2encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario2
+var estadoboton = true;
+
+
+document.getElementById('inputfile').addEventListener('change', function() { //escucha cuando un archivo se sube al boton de subir archivo
+              
+var fr=new FileReader();
+              
+fr.readAsText(this.files[0]);
+fr.onload=function(){
+  //console.log(fr);
+  lineas = fr.result.split(/\r\n|\n/);
+  //console.log(lineas[0]);
+  //console.log(lineas[1]);
+  iniciar_renderizado();
+}})
+
+class Mensaje //crea los objetos de los mensajes
+{
+  constructor(c, h, z, f, u)
+  {
+    this.contenido = c;
+    this.hora = h;
+    this.horario = z
+    this.fecha = f;
+    this.usuario = u;                              
+  }
+}
+
+var iterador = 1; //iterador para ciclos de lectura y escritura de mensajes
+
+function iniciar_renderizado()
+{
+  while(seguirciclo == true)
+  {
+    let args = lineas[iterador].split(" "); //aqui separo los argumentos de las lineas
+    //console.log(args[0]); //solo constato que funciona
+    let fechamensaje = args[0]; //fecha
+    let horamensaje = args[1]; //hora
+    let horariomensaje = args[2]; //si la hora es AM o PM
+    let contenidomensaje = ""; //el contenido del mensaje
+    let usuariomensaje = false; //falso para mensaje de usuario 1, y true para mensaje de usuario 2
+
+
+    var encontrarusuario1 = 4; //es para empezar a partir de un argumento, está hecho variable para poder sumarse y restarse
+    //console.log("USUARIO 1"); 
+
+    while(nombreusuario1encontrado == false) //se ejecuta dependiendo de si el nombre de usuario1 ya se encontró o no
+    {
+      if(args[encontrarusuario1].substr(length - 1) == ":") //comprueba que si a partir del 4 argumento (donde empieza el nombre de usuario) hay un ":", lo cual indicaría que ahí termina el nombre de usuario1
+      {
+        nombreusuario1encontrado = true; //declara que ya encontró el nombre de usuario1
+        nombreusuario1 += args[encontrarusuario1]; //añade las palabras al nombre de usuario1
+        botonusuario1.innerText = nombreusuario1.substr(0, nombreusuario1.length-1);
+        //console.log(nombreusuario1); //consolea el nombre
+        //console.log("Con substr " + nombreusuario1.substr(0, nombreusuario1.length-2)) //consolea el nombre sin el ":" final
+      }
+      else
+      {
+        nombreusuario1 += args[encontrarusuario1] + " "; //añade las palabras al nombre de usuario más un espacio para futuras palabras
+        //console.log(nombreusuario1); //consolea el nombre
+      }
+      encontrarusuario1++; //añade un iterador a la variable para avanzar una palabra si es que la palabra verificada no termina en un ":"
+    }
+
+    var encontrarusuario2 = 4; //es para empezar a partir de un argumento, está hecho variable para poder sumarse y restarse
+
+    //console.log("PRUEBA"); //consolea "PRUEBA" para separar
+    //console.log(args[encontrarusuario2]); //consolea la primera palabra del nombre de usuario
+
+    console.log(nombreusuario1.substr(0, args[encontrarusuario2].length)); //consolea el nombre del usuario 1, limitándose a la primer palabra del nombre del usuario 2
+    if(args[encontrarusuario2] != nombreusuario1.substr(0, args[encontrarusuario2].length)) //si el nombre de usuario2 es diferente al nombre del usuario 1, este codigo se ejecuta
+    {
+      console.log("USUARIO 2"); //consolea para separar
+      while(nombreusuario2encontrado == false) //se ejecuta dependiendo de si el nombre de usuario2 ya se encontró o no
+      {
+        if(args[encontrarusuario2].substr(length - 1) == ":") //comprueba que si a partir del 4 argumento (donde empieza el nombre de usuario) hay un ":", lo cual indicaría que ahí termina el nombre de usuario2
+        {
+          nombreusuario2encontrado = true; //declara que ya encontró el nombre de usuario2
+          nombreusuario2 += args[encontrarusuario2] + " "; //añade las palabras al nombre de usuario2
+          botonusuario2.innerText = nombreusuario2.substr(0, nombreusuario2.length-2);
+          //console.log(nombreusuario2); //consolea el nombre
+          //console.log("Con substr " + nombreusuario2.substr(0, nombreusuario2.length-2)); //consolea el nombre sin el ":" final
+        }
+        else
+        {
+          nombreusuario2 += args[encontrarusuario2] + " "; //añade las palabras el nombre de usuario2 más un espacio al final
+          //console.log(nombreusuario2); //consolea el nombre del usuario2
+        }
+        encontrarusuario2++; //añade un iterador a la variable para avanzar una palabra si es que la palabra verificada no termina en un ":"
+      }
+    }
+
+
+    //RENDERIZANDO MENSAJES
+    if(args[4].substr(0, 3) == nombreusuario1.substr(0, 3))
+    {
+      contenidomensaje = lineas[iterador].substr((args[0].length + 1 + args[1].length + 1 + args[2].length + 1 + args[3].length + 1 + nombreusuario1.length + 1), lineas[iterador].length)
+      var mensaje_nuevo = new Mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
+      //console.log(contenidomensaje);
+      crear_div_mensaje(mensaje_nuevo.contenido, mensaje_nuevo.hora, mensaje_nuevo.horario, mensaje_nuevo.fecha, mensaje_nuevo.usuario);
+
+      if(lineas[iterador] == lineas.length-1)
+      {
+        seguirciclo=false;
+      }
+    }
+    else if(args[4].substr(0, 3) == nombreusuario2.substr(0, 3))
+    {
+      contenidomensaje = lineas[iterador].substr((args[0].length + 1 + args[1].length + 1 + args[2].length + 1 + args[3].length + 1 + nombreusuario2.length), lineas[iterador].length)
+      usuariomensaje = true;
+      var mensaje_nuevo = new Mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
+      //console.log(contenidomensaje);      
+      crear_div_mensaje(mensaje_nuevo.contenido, mensaje_nuevo.hora, mensaje_nuevo.horario, mensaje_nuevo.fecha, mensaje_nuevo.usuario);
+
+      if(lineas[iterador] == lineas.length-1)
+      {
+        seguirciclo=false;
+      }
+    }
+
+
+    iterador++;
+  }
+}
+
+
+//FUNCION PARA CREAR LOS DIVS QUE CONTIENEN LOS MENSAJES
+function crear_div_mensaje(contenido, hora, horario, fecha, usuario)
+{
+  let mensajito = document.createElement("p");
+  let estructura_mensaje = document.createElement("div");
+  let horamensaje = document.createElement("span");
+
+  estructura_mensaje.classList.add("message");
+
+  if(usuario == true)
+  {
+    estructura_mensaje.classList.add("originalmente2")
+    estructura_mensaje.classList.add("friend_msg");
+  }
+  else if(usuario == false)
+  {
+    estructura_mensaje.classList.add("originalmente1");
+    estructura_mensaje.classList.add("my_msg");
+  }
+
+  horamensaje.appendChild(document.createTextNode(hora));
+  mensajito.appendChild(document.createTextNode(contenido));
+  estructura_mensaje.appendChild(mensajito);
+  mensajito.appendChild(horamensaje);
+
+  document.getElementById("mensajesdetexto").appendChild(estructura_mensaje);
+}
+
+
+
+
+//BOTONES DE USUARIOS
+var mensajes_usuario1 = document.getElementsByClassName("originalmente1");
+var mensajes_usuario2 = document.getElementsByClassName("originalmente2");
+
+function botonejecutar1()
+{
+  //CSS COLORES
+  botonusuario1.style.backgroundColor = "#075E54";
+  botonusuario1.style.color = "white";
+  botonusuario2.style.backgroundColor = "#FFFFFF";
+  botonusuario2.style.color = "black";
+
+  //CAMBIANDO DE LUGARES LOS MENSAJES
+  for(var i = 0; i<=mensajes_usuario1.length-1; i++)
+  { 
+    mensajes_usuario1[i].classList.add("my_msg");
+    mensajes_usuario1[i].classList.remove("friend_msg");
+  }
+  for(var i = 0; i<=mensajes_usuario2.length-1; i++)
+  { 
+    mensajes_usuario2[i].classList.add("friend_msg");
+    mensajes_usuario2[i].classList.remove("my_msg");
+  }
+}
+
+function botonejecutar2()
+{
+  //CSS COLORES
+  botonusuario1.style.backgroundColor = "#FFFFFF";
+  botonusuario1.style.color = "black";
+  botonusuario2.style.backgroundColor = "#075E54";
+  botonusuario2.style.color = "white";
+
+  //CAMBIANDO DE LUGARES LOS MENSAJES
+  for(var i = 0; i<=mensajes_usuario1.length-1; i++)
+  { 
+    mensajes_usuario1[i].classList.add("friend_msg");
+    mensajes_usuario1[i].classList.remove("my_msg");
+  }
+  for(var i = 0; i<=mensajes_usuario2.length-1; i++)
+  { 
+    mensajes_usuario2[i].classList.add("my_msg");
+    mensajes_usuario2[i].classList.remove("friend_msg");
+  }
+}
+    </script>
+</body>
+</html>
