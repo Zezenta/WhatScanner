@@ -40,6 +40,7 @@ function iniciar_renderizado()
 {
 	while(seguirciclo == true)
 	{
+		console.log(iterador);
 		let args = lineas[iterador].split(" "); //aqui separo los argumentos de las lineas
 		//console.log(args[0]); //solo constato que funciona
 		let fechamensaje = args[0]; //fecha
@@ -54,11 +55,13 @@ function iniciar_renderizado()
 
 		while(nombreusuario1encontrado == false) //se ejecuta dependiendo de si el nombre de usuario1 ya se encontró o no
 		{
-			if(args[encontrarusuario1].substr(length - 1) == ":") //comprueba que si a partir del 4 argumento (donde empieza el nombre de usuario) hay un ":", lo cual indicaría que ahí termina el nombre de usuario1
+			//console.log(args[encontrarusuario1].substring(0, args[encontrarusuario1].length));
+			if(args[encontrarusuario1].substring(args[encontrarusuario1].length - 1) == ":") //comprueba que si a partir del 4 argumento (donde empieza el nombre de usuario) hay un ":", lo cual indicaría que ahí termina el nombre de usuario1
 			{
 				nombreusuario1encontrado = true; //declara que ya encontró el nombre de usuario1
 				nombreusuario1 += args[encontrarusuario1]; //añade las palabras al nombre de usuario1
-				botonusuario1.innerText = nombreusuario1.substr(0, nombreusuario1.length-1);
+				//console.log(nombreusuario1)
+				botonusuario1.innerText = nombreusuario1.substring(0, nombreusuario1.length-1);
 				//console.log(nombreusuario1); //consolea el nombre
 				//console.log("Con substr " + nombreusuario1.substr(0, nombreusuario1.length-2)) //consolea el nombre sin el ":" final
 			}
@@ -75,19 +78,20 @@ function iniciar_renderizado()
 		//console.log("PRUEBA"); //consolea "PRUEBA" para separar
 		//console.log(args[encontrarusuario2]); //consolea la primera palabra del nombre de usuario
 
-		console.log(nombreusuario1.substr(0, args[encontrarusuario2].length)); //consolea el nombre del usuario 1, limitándose a la primer palabra del nombre del usuario 2
-		if(args[encontrarusuario2] != nombreusuario1.substr(0, args[encontrarusuario2].length)) //si el nombre de usuario2 es diferente al nombre del usuario 1, este codigo se ejecuta
+		//console.log(nombreusuario1); //consolea el nombre del usuario 1
+		console.log(args[encontrarusuario2]);
+		if(args[encontrarusuario2] != nombreusuario1.substring(0, args[encontrarusuario2].length)) //si el nombre de usuario2 es diferente al nombre del usuario 1, este codigo se ejecuta
 		{
-			console.log("USUARIO 2"); //consolea para separar
+			//console.log("USUARIO 2"); //consolea para separar
 			while(nombreusuario2encontrado == false) //se ejecuta dependiendo de si el nombre de usuario2 ya se encontró o no
 			{
-				if(args[encontrarusuario2].substr(length - 1) == ":") //comprueba que si a partir del 4 argumento (donde empieza el nombre de usuario) hay un ":", lo cual indicaría que ahí termina el nombre de usuario2
+				if(args[encontrarusuario2].substring(args[encontrarusuario2].length - 1) == ":") //comprueba que si a partir del 4 argumento (donde empieza el nombre de usuario) hay un ":", lo cual indicaría que ahí termina el nombre de usuario2
 				{
 					nombreusuario2encontrado = true; //declara que ya encontró el nombre de usuario2
-					nombreusuario2 += args[encontrarusuario2] + " "; //añade las palabras al nombre de usuario2
-					botonusuario2.innerText = nombreusuario2.substr(0, nombreusuario2.length-2);
+					nombreusuario2 += args[encontrarusuario2]; //añade las palabras al nombre de usuario2
+					botonusuario2.innerText = nombreusuario2.substring(0, nombreusuario2.length - 1);
 					//console.log(nombreusuario2); //consolea el nombre
-					//console.log("Con substr " + nombreusuario2.substr(0, nombreusuario2.length-2)); //consolea el nombre sin el ":" final
+					//console.log("Con substr " + nombreusuario2.substring(0, nombreusuario2.length-2)); //consolea el nombre sin el ":" final
 				}
 				else
 				{
@@ -100,9 +104,9 @@ function iniciar_renderizado()
 
 
 		//RENDERIZANDO MENSAJES
-		if(args[4].substr(0, 3) == nombreusuario1.substr(0, 3))
+		if(args[4].substring(0, 3) == nombreusuario1.substring(0, 3))
 		{
-			contenidomensaje = lineas[iterador].substr((args[0].length + 1 + args[1].length + 1 + args[2].length + 1 + args[3].length + 1 + nombreusuario1.length + 1), lineas[iterador].length)
+			contenidomensaje = lineas[iterador].substring((args[0].length + 1 + args[1].length + 1 + args[2].length + 1 + args[3].length + 1 + nombreusuario1.length + 1), lineas[iterador].length)
 			var mensaje_nuevo = new Mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
 			//console.log(contenidomensaje);
 			crear_div_mensaje(mensaje_nuevo.contenido, mensaje_nuevo.hora, mensaje_nuevo.horario, mensaje_nuevo.fecha, mensaje_nuevo.usuario);
@@ -112,9 +116,9 @@ function iniciar_renderizado()
 				seguirciclo=false;
 			}
 		}
-		else if(args[4].substr(0, 3) == nombreusuario2.substr(0, 3))
+		else if(args[4].substring(0, 3) == nombreusuario2.substring(0, 3))
 		{
-			contenidomensaje = lineas[iterador].substr((args[0].length + 1 + args[1].length + 1 + args[2].length + 1 + args[3].length + 1 + nombreusuario2.length), lineas[iterador].length)
+			contenidomensaje = lineas[iterador].substring((args[0].length + 1 + args[1].length + 1 + args[2].length + 1 + args[3].length + 1 + nombreusuario2.length), lineas[iterador].length)
 			usuariomensaje = true;
 			var mensaje_nuevo = new Mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
 			//console.log(contenidomensaje);			
@@ -122,12 +126,16 @@ function iniciar_renderizado()
 
 			if(lineas[iterador] == lineas.length-1)
 			{
-				seguirciclo=false;
+				seguirciclo = false;
 			}
 		}
 
 
 		iterador++;
+		if(iterador == lineas.length) //si ya está en la última línea de mensajes, se detiene el ciclo
+		{
+			seguirciclo = false;
+		}
 	}
 }
 
