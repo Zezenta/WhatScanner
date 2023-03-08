@@ -8,7 +8,6 @@ var nombreusuario1encontrado = false; //es para ver si tengo que volver a buscar
 var nombreusuario2encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario2
 var estadoboton = true;
 
-
 document.getElementById('inputfile').addEventListener('change', function() { //escucha cuando un archivo se sube al boton de subir archivo
               
 var fr=new FileReader();
@@ -19,20 +18,7 @@ fr.onload=function(){
 	iniciar_renderizado();
 }})
 
-class Mensaje //crea los objetos de los mensajes
-{
-	constructor(c, h, z, f, u)
-	{
-		this.contenido = c;
-		this.hora = h;
-		this.horario = z
-		this.fecha = f;
-		this.usuario = u;                              
-	}
-}
-
 var iterador = 1; //iterador para ciclos de lectura y escritura de mensajes, empieza en 1 porque la línea 0 se tiene que ignorar
-
 function iniciar_renderizado()
 {
 	while(seguirciclo == true)
@@ -61,7 +47,6 @@ function iniciar_renderizado()
 			}
 		}
 
-
 		//RENDERIZANDO MENSAJES
 		if(lineacomprobada) //si la siguiente linea es una sola palabra de un mensaje anterior por un salto de linea, no se ejecuta nada de esto y se va a la siguiente línea
 		{
@@ -85,24 +70,12 @@ function iniciar_renderizado()
 			usuariomensaje = (lineacomprobada[7] == nombreusuario2) ? true : false; //This code checks if lineacomprobada[7] is equal to nombreusuario2. If it is, then usuariomensaje is set to true. If it isn't, then usuariomensaje remains unchanged.
 
 			//se crea el div del mensaje nuevo como tal
-			var mensaje_nuevo = new Mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
-			//console.log(contenidomensaje);
-			crear_div_mensaje(mensaje_nuevo.contenido, mensaje_nuevo.hora, mensaje_nuevo.horario, mensaje_nuevo.fecha, mensaje_nuevo.usuario);
-
-			if(lineas[iterador] == lineas.length-1)
-			{
-				seguirciclo=false;
-			}
+			crear_div_mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
 		}
-
 		iterador++;
-		if(iterador == lineas.length) //si ya está en la última línea de mensajes, se detiene el ciclo
-		{
-			seguirciclo = false;
-		}
+		seguirciclo = (iterador == lineas.length) ? false : seguirciclo;
 	}
 }	
-
 
 //FUNCION PARA CREAR LOS DIVS QUE CONTIENEN LOS MENSAJES
 function crear_div_mensaje(contenido, hora, horario, fecha, usuario)
@@ -131,9 +104,6 @@ function crear_div_mensaje(contenido, hora, horario, fecha, usuario)
 
 	document.getElementById("mensajesdetexto").appendChild(estructura_mensaje);
 }
-
-
-
 
 //BOTONES DE USUARIOS
 var mensajes_usuario1 = document.getElementsByClassName("originalmente1");
@@ -249,5 +219,3 @@ function switchthemes()
 		darkmode = true;
 	}
 }
-
-
