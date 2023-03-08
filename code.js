@@ -15,10 +15,7 @@ var fr=new FileReader();
               
 fr.readAsText(this.files[0]);
 fr.onload=function(){
-	//console.log(fr);
 	lineas = fr.result.split(/\r\n|\n/);
-	//console.log(lineas[0]);
-	//console.log(lineas[1]);
 	iniciar_renderizado();
 }})
 
@@ -34,22 +31,18 @@ class Mensaje //crea los objetos de los mensajes
 	}
 }
 
-var iterador = 1; //iterador para ciclos de lectura y escritura de mensajes
+var iterador = 1; //iterador para ciclos de lectura y escritura de mensajes, empieza en 1 porque la línea 0 se tiene que ignorar
 
 function iniciar_renderizado()
 {
 	while(seguirciclo == true)
 	{
-		//console.log(iterador);
-		var lineacomprobada = lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([A-zÀ-ÿ\s]+):\s(.*)/);
+		var lineacomprobada = lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([A-zÀ-ÿ\s]+):\s(.*)/); //la documentación del regex es, 1 para la fecha completa, 2 para el día, 3 para el mes, 4 para el año, 5 para la hora, 6 para el horario de hora, 7 para el usuario, y 8 para el contenido del mensaje
+		let usuariomensaje = false; //falso para mensaje de usuario 1, y true para mensaje de usuario 2
 		let fechamensaje = lineacomprobada[1]; //fecha
 		let horamensaje = lineacomprobada[5]; //hora
 		let horariomensaje = lineacomprobada[6]; //si la hora es AM o PM
 		let contenidomensaje = lineacomprobada[8]; //el contenido del mensaje
-		let usuariomensaje = false; //falso para mensaje de usuario 1, y true para mensaje de usuario 2
-
-
-		var encontrarusuario1 = 4; //es para empezar a partir de un argumento, está hecho variable para poder sumarse y restarse
 
 		while(nombreusuario1encontrado == false) //se ejecuta dependiendo de si el nombre de usuario1 ya se encontró o no
 		{
@@ -58,7 +51,7 @@ function iniciar_renderizado()
 			nombreusuario1encontrado = true;
 		}
 
-		if(lineacomprobada[7] != undefined && lineacomprobada[7] != nombreusuario1)
+		if(lineacomprobada[7] != nombreusuario1)
 		{
 			while(nombreusuario2encontrado == false)
 			{
@@ -72,40 +65,35 @@ function iniciar_renderizado()
 		//RENDERIZANDO MENSAJES
 		if(lineacomprobada) //si la siguiente linea es una sola palabra de un mensaje anterior por un salto de linea, no se ejecuta nada de esto y se va a la siguiente línea
 		{
-			if(lineacomprobada[7] == (nombreusuario1||nombreusuario2))
+			contenidomensaje = lineacomprobada[8];
+
+			//comprobar si la siguiente línea es una continuación en salto de línea
+			var regex_prueba;
+			try
 			{
-				contenidomensaje = lineacomprobada[8];
+				regex_prueba = lineas[iterador + 1].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([A-zÀ-ÿ\s]+):\s(.*)/);
+			}
+			catch (error)
+			{
+				console.log("Error esperado, ya no hay siguiente línea (todo bien)");
+			}
+			if(!regex_prueba)
+			{
+				contenidomensaje += " " + lineas[iterador + 1];
+				iterador++;
+			}
+			usuariomensaje = (lineacomprobada[7] == nombreusuario2) ? true : false; //This code checks if lineacomprobada[7] is equal to nombreusuario2. If it is, then usuariomensaje is set to true. If it isn't, then usuariomensaje remains unchanged.
 
-				//comprobar si la siguiente línea es una continuación en salto de línea
-				var regex_prueba;
-				try
-				{
-					regex_prueba = lineas[iterador + 1].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([A-zÀ-ÿ\s]+):\s(.*)/);
-				}
-				catch (error)
-				{
-					console.log("Error esperado, ya no hay siguiente línea (todo bien)");
-				}
-				if(!regex_prueba)
-				{
-					contenidomensaje += " " + lineas[iterador + 1];
-				}
-				
-				usuariomensaje = (lineacomprobada[7] == nombreusuario2) ? true : usuariomensaje; //This code checks if lineacomprobada[7] is equal to nombreusuario2. If it is, then usuariomensaje is set to true. If it isn't, then usuariomensaje remains unchanged.
+			//se crea el div del mensaje nuevo como tal
+			var mensaje_nuevo = new Mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
+			//console.log(contenidomensaje);
+			crear_div_mensaje(mensaje_nuevo.contenido, mensaje_nuevo.hora, mensaje_nuevo.horario, mensaje_nuevo.fecha, mensaje_nuevo.usuario);
 
-				//se crea el div del mensaje nuevo como tal
-				var mensaje_nuevo = new Mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
-				//console.log(contenidomensaje);
-				crear_div_mensaje(mensaje_nuevo.contenido, mensaje_nuevo.hora, mensaje_nuevo.horario, mensaje_nuevo.fecha, mensaje_nuevo.usuario);
-
-				if(lineas[iterador] == lineas.length-1)
-				{
-					seguirciclo=false;
-				}
-
+			if(lineas[iterador] == lineas.length-1)
+			{
+				seguirciclo=false;
 			}
 		}
-
 
 		iterador++;
 		if(iterador == lineas.length) //si ya está en la última línea de mensajes, se detiene el ciclo
