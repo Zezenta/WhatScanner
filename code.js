@@ -6,7 +6,6 @@ var nombreusuario1 = ""; //el nombre del usuario1
 var nombreusuario2 = ""; //el nombre del usuario2
 var nombreusuario1encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario1
 var nombreusuario2encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario2
-var estadoboton = true;
 
 document.getElementById('inputfile').addEventListener('change', function() { //escucha cuando un archivo se sube al boton de subir archivo
               
