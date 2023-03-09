@@ -56,35 +56,6 @@ body { /*fondo fondo verde*/
   flex-direction: row;
 }
 
-.message_p { /*sigue funcionando despues de eliminado*/
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: Segoe UI;
-}
-
-.message_p b { /*sigue funcionando despues de eliminado*/
-  background: #06d755;
-  color: #fff;
-  min-width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.75rem;
-}
-
-.message_p p { /*sigue funcionando despues de eliminado*/
-  color: #aaa;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  font-size: 0.9em;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .imgText { /*Título del nombre de usuario*/
   font-weight: 500;
   line-height: 1.2em;
@@ -93,7 +64,7 @@ body { /*fondo fondo verde*/
   padding-top: 8px;
 }
 
-.imgText span{ /*estilo de "online" abajo del nombre de usuario*/
+.imgText span{ /*Estilo del botón de "Light Mode"*/
   font-size: 0.8em;
   color: white;
 }
@@ -196,7 +167,6 @@ body { /*fondo fondo verde*/
   cursor: pointer;
   margin-top: 8px;
   align-items: center;
-  display: inline-block;
   white-space: nowrap;
   float: left;
 }
@@ -256,6 +226,5 @@ input[type="file"]::-webkit-file-upload-button {
   cursor: pointer;
   margin-top: 8px;
   align-items: center;
-  display: inline-block;
   float: right;
 }
