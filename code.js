@@ -22,7 +22,7 @@ function iniciar_renderizado()
 {
 	while(seguirciclo == true)
 	{
-		var lineacomprobada = lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([A-zÀ-ÿ\s]+):\s(.*)/); //la documentación del regex es, 1 para la fecha completa, 2 para el día, 3 para el mes, 4 para el año, 5 para la hora, 6 para el horario de hora, 7 para el usuario, y 8 para el contenido del mensaje
+		var lineacomprobada = lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([\+A-zÀ-ÿ\s\d]+):\s(.*)/); //la documentación del regex es, 1 para la fecha completa, 2 para el día, 3 para el mes, 4 para el año, 5 para la hora, 6 para el horario de hora, 7 para el usuario, y 8 para el contenido del mensaje
 		let usuariomensaje = false; //falso para mensaje de usuario 1, y true para mensaje de usuario 2
 		let fechamensaje = lineacomprobada[1]; //fecha
 		let horamensaje = lineacomprobada[5]; //hora
@@ -52,19 +52,27 @@ function iniciar_renderizado()
 			contenidomensaje = lineacomprobada[8];
 
 			//comprobar si la siguiente línea es una continuación en salto de línea
-			var regex_prueba;
-			try
+			let regex_prueba;
+			var it;
+			for(it = 1; it<lineas.length-1; it++)
 			{
-				regex_prueba = lineas[iterador + 1].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([A-zÀ-ÿ\s]+):\s(.*)/);
-			}
-			catch (error)
-			{
-				console.log("Error esperado, ya no hay siguiente línea (todo bien)");
-			}
-			if(!regex_prueba)
-			{
-				contenidomensaje += " " + lineas[iterador + 1];
-				iterador++;
+				try
+				{
+					regex_prueba = lineas[iterador + 1].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([\+A-zÀ-ÿ\s\d]+):\s(.*)/);
+				}
+				catch (error)
+				{
+					console.log("Error esperado, ya no hay siguiente línea (todo bien)");
+				}
+				if(!regex_prueba && iterador != lineas.length - 1)
+				{
+					contenidomensaje += " " + lineas[iterador + 1];
+					iterador++;
+				}
+				else
+				{
+					break;
+				}
 			}
 			usuariomensaje = (lineacomprobada[7] == nombreusuario2) ? true : false; //This code checks if lineacomprobada[7] is equal to nombreusuario2. If it is, then usuariomensaje is set to true. If it isn't, then usuariomensaje remains unchanged.
 
@@ -96,7 +104,7 @@ function crear_div_mensaje(contenido, hora, horario, fecha, usuario)
 		estructura_mensaje.classList.add("my_msg");
 	}
 
-	horamensaje.appendChild(document.createTextNode(hora + " " + horario));
+	horamensaje.appendChild(document.createTextNode(hora + " " + horario + " " + fecha));
 	mensajito.appendChild(document.createTextNode(contenido));
 	estructura_mensaje.appendChild(mensajito);
 	mensajito.appendChild(horamensaje);

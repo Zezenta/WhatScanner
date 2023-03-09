@@ -98,19 +98,24 @@ body { /*fondo fondo verde*/
   color: white;
 }
 
+/*LUGAR DE PRUEBAS PARA EVITAR OVERFLOW DE CONTENIDO*/
+
+
+
 /* CHAT BOX */
 .chatbox { /*muy importante, no eliminar xd, analiza luego*/
   position: relative;
-  width: 100%;
+  width: 100%; /*prueba, originalmente era 100%*/
   height: calc(100% - 80px); /*esto configura la altura del chatbox en si*/
   padding: 50px;
   overflow-y: auto;
 }
 
 .message { /*posicionador de cuadros de mensajes*/
+  word-wrap: break-word;
   position: relative;
   display: flex;
-  width: 100%;
+  width: 99%;
   margin: 5px 0;
 }
 
