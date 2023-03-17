@@ -80,6 +80,7 @@ body { /*fondo fondo verde*/
   height: calc(100% - 80px); /*esto configura la altura del chatbox en si*/
   padding: 50px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .message { /*posicionador de cuadros de mensajes*/
@@ -94,7 +95,7 @@ body { /*fondo fondo verde*/
   position: relative;
   right: 0;
   text-align: left;
-  max-width: 65%;
+  max-width: 500px;
   padding: 12px;
   background: #005c4b;
   border-radius: 10px;
