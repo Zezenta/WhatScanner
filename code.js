@@ -112,9 +112,7 @@ function botonejecutar(user1, user2, color1, color2)
 {
 	//CSS COLORES
 	botonusuario1.style.backgroundColor = color1;
-	botonusuario1.style.color = "white";
 	botonusuario2.style.backgroundColor = color2;
-	botonusuario2.style.color = "white";
 
 	//CAMBIANDO DE LUGARES LOS MENSAJES
 	for(var i = 0; i<=mensajes_usuario1.length-1; i++)
