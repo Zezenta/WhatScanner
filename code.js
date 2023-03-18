@@ -23,7 +23,8 @@ function iniciar_renderizado()
 	while(seguirciclo == true)
 	{
 		var lineacomprobada = lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([\+A-zÀ-ÿ\s\d]+):\s(.*)/); //la documentación del regex es, 1 para la fecha completa, 2 para el día, 3 para el mes, 4 para el año, 5 para la hora, 6 para el horario de hora, 7 para el usuario, y 8 para el contenido del mensaje
-		let usuariomensaje = false; //falso para mensaje de usuario 1, y true para mensaje de usuario 2
+		let usuariomensajeoriginal = ""; //para contrl de tags luego
+		var usuariomensajetag = ""; //para control de tags luego
 		let fechamensaje = lineacomprobada[1]; //fecha
 		let horamensaje = lineacomprobada[5]; //hora
 		let horariomensaje = lineacomprobada[6]; //si la hora es AM o PM
@@ -74,10 +75,10 @@ function iniciar_renderizado()
 					break;
 				}
 			}
-			usuariomensaje = (lineacomprobada[7] == nombreusuario2) ? true : false; //This code checks if lineacomprobada[7] is equal to nombreusuario2. If it is, then usuariomensaje is set to true. If it isn't, then usuariomensaje remains unchanged.
-
+			usuariomensajeoriginal = (lineacomprobada[7] == nombreusuario2) ? "originalmente2" : "originalmente1"; //This code checks if lineacomprobada[7] is equal to nombreusuario2. If it is, then usuariomensajeoriginal is set to "originalmente2". If it isn't, then usuariomensajeoriginal is "originalmente1".
+			usuariomensajetag = (lineacomprobada[7] == nombreusuario2) ? "friend_msg" : "my_msg"; //This code checks if lineacomprobada[7] is equal to nombreusuario2. If it is, then usuariomensajetag is set to "friend_msg". If it isn't, then usuariomensajetag is "my_msg".
 			//se crea el div del mensaje nuevo como tal
-			crear_div_mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensaje);
+			crear_div_mensaje(contenidomensaje, horamensaje, horariomensaje, fechamensaje, usuariomensajeoriginal, usuariomensajetag);
 		}
 		iterador++;
 		seguirciclo = (iterador == lineas.length) ? false : seguirciclo;
@@ -85,24 +86,15 @@ function iniciar_renderizado()
 }	
 
 //FUNCION PARA CREAR LOS DIVS QUE CONTIENEN LOS MENSAJES
-function crear_div_mensaje(contenido, hora, horario, fecha, usuario)
+function crear_div_mensaje(contenido, hora, horario, fecha, usuariooriginal, usuariotag)
 {
 	let mensajito = document.createElement("p");
 	let estructura_mensaje = document.createElement("div");
 	let horamensaje = document.createElement("span");
 
 	estructura_mensaje.classList.add("message");
-
-	if(usuario == true)
-	{
-		estructura_mensaje.classList.add("originalmente2")
-		estructura_mensaje.classList.add("friend_msg");
-	}
-	else if(usuario == false)
-	{
-		estructura_mensaje.classList.add("originalmente1");
-		estructura_mensaje.classList.add("my_msg");
-	}
+	estructura_mensaje.classList.add(usuariooriginal)
+	estructura_mensaje.classList.add(usuariotag);
 
 	horamensaje.appendChild(document.createTextNode(hora + " " + horario + " " + fecha));
 	mensajito.appendChild(document.createTextNode(contenido));
