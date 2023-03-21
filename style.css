@@ -178,7 +178,7 @@ body { /*fondo fondo verde*/
 input[type="file"]::-webkit-file-upload-button {
   position: absolute;
   border-radius: 10px;
-  background-color: blue; /*#00a884;*/
+  background-color: #00a884;
   border: none;
   color: white;
   text-align: center;

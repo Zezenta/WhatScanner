@@ -130,7 +130,6 @@ function botonejecutar(user1, user2, color1, color2)
 var darkmode = true;
 var marco_es_gay = true;
 
-
 //NO PUEDODOOOOO
 function switchthemes()
 {
@@ -149,19 +148,12 @@ function switchthemes()
 		//$("div.container.rightside").css("background", "url(images/pattern.png")
 		$("div.rightSide").css("opacity", "1")
 
-
 		$("div.header").css("background-color", "#f0f2f5");
 		$("button.button1").css("background-color", "#06cf9c");
 		$("div.message" ).find( "p" ).css( "color", "#111b21" );
-		$(this).css('background', 'linear-gradient(135deg, #d9fdd3 0%, #d9fdd3 50%, transparent 50%, transparent');
-
-
-
 
 		$("button.button3").css("background-color", "#f0f2f5");
 		$("button.button4").css("background-color", "#f0f2f5");
-
-
 
 		document.getElementById("botonsillomodos").textContent = "Dark Mode";
 		darkmode = false;
@@ -181,16 +173,10 @@ function switchthemes()
 		$("div.message" ).find( "p" ).css( "color", "#111b21" );
 		$(this).css('background', 'linear-gradient(135deg, #d9fdd3 0%, #d9fdd3 50%, transparent 50%, transparent');
 
-
-
-
 		$("button.button3").css("background-color", "#005c4b");
 		$("button.button4").css("background-color", "#005c4b");
 
-
-
 		document.getElementById("botonsillomodos").textContent = "Dark Mode";
-
 
 		darkmode = true;
 	}
