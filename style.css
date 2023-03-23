@@ -12,7 +12,7 @@
   --button-text-colors: white;
 }
 
-.dark-mode {
+.darkmode {
   --obscure: #202c33;
   --friend-msg-color: #202c33;
   --dark-green: #005c4b;
@@ -26,7 +26,7 @@
   --button-text-colors: white;
 }
 
-.light-mode {
+.lightmode {
   --obscure: #f5f6f6;
   --friend-msg-color: #ffffff;
   --dark-green: #d9fdd3;
@@ -242,8 +242,8 @@ input[type="file"]::-webkit-file-upload-button {
 
 /*doble boton*/
 .button3 {
-  background-color: var(--button-background); /*^005c4b*/
-  border: 1px solid var(--button-background); /*^005c4b*/
+  background-color: var(--button-background); /*06cf9c*/
+  border: 1px solid var(--button-background); /*06cf9c*/
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   color: var(--button-text-colors);
@@ -260,7 +260,7 @@ input[type="file"]::-webkit-file-upload-button {
 
 .button4 {
   background-color: var(--obscure); /*202c33*/
-  border: 1px solid var(--button-background); /*^005c4b*/
+  border: 1px solid var(--button-background); /*06cf9c*/
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   color: var(--button-text-colors);

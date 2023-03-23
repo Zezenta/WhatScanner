@@ -1,6 +1,6 @@
 const botonusuario1 = document.getElementById("botonusuario1");
 const botonusuario2 = document.getElementById("botonusuario2");
-const container = document.querySelector(".container");
+const container = document.getElementById("containerid");
 var lineas;
 var seguirciclo = true;
 var nombreusuario1 = ""; //el nombre del usuario1
@@ -8,8 +8,8 @@ var nombreusuario2 = ""; //el nombre del usuario2
 var nombreusuario1encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario1
 var nombreusuario2encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario2
 var darkmode = true; //true dark, false light
-var color1 = "#06cf9c";
-var color2 = "#202c33";
+var color1 = "rgb(6, 207, 156)"; //"#06cf9c";
+var color2 = "rgb(32, 44, 51)";//"#202c33";
 
 document.getElementById('inputfile').addEventListener('change', function() { //escucha cuando un archivo se sube al boton de subir archivo
               
@@ -114,10 +114,9 @@ var mensajes_usuario2 = document.getElementsByClassName("originalmente2");
 
 function botonejecutar(user1, user2)
 {
-	color2 = (darkmode != true) ? "#f5f6f6" : color2;
-	//CSS COLORES
-	botonusuario1.style.backgroundColor = (botonusuario1.style.backgroundColor != color2) ? color2 : color1;
-	botonusuario2.style.backgroundColor = (botonusuario2.style.backgroundColor != color1) ? color1 : color2;
+	//CSS COLORES BOTONES
+	botonusuario1.style.backgroundColor = (botonusuario1.style.backgroundColor == color2) ? color1 : color2;
+	botonusuario2.style.backgroundColor = (botonusuario2.style.backgroundColor == color1) ? color2 : color1;
 
 	//CAMBIANDO DE LUGARES LOS MENSAJES
 	for(var i = 0; i<=mensajes_usuario1.length-1; i++)
@@ -139,6 +138,7 @@ var marco_es_gay = true;
 function switchthemes()
 {
 	darkmode = (darkmode == true) ? false : true;
-	color2 = (darkmode == false) ? "#f5f6f6" : color2;
-	//container.classList.toggle("lightmode");
+	color2 = (darkmode == false) ? "rgb(245, 246, 246)" : color2; //#f5f6f6
+	container.classList.toggle("lightmode");
+	container.classList.toggle("darkmode");
 }
