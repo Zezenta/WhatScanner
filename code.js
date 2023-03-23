@@ -1,11 +1,15 @@
 const botonusuario1 = document.getElementById("botonusuario1");
 const botonusuario2 = document.getElementById("botonusuario2");
+const container = document.querySelector(".container");
 var lineas;
 var seguirciclo = true;
 var nombreusuario1 = ""; //el nombre del usuario1
 var nombreusuario2 = ""; //el nombre del usuario2
 var nombreusuario1encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario1
 var nombreusuario2encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario2
+var darkmode = true; //true dark, false light
+var color1 = "#06cf9c";
+var color2 = "#202c33";
 
 document.getElementById('inputfile').addEventListener('change', function() { //escucha cuando un archivo se sube al boton de subir archivo
               
@@ -108,11 +112,12 @@ function crear_div_mensaje(contenido, hora, horario, fecha, usuariooriginal, usu
 var mensajes_usuario1 = document.getElementsByClassName("originalmente1");
 var mensajes_usuario2 = document.getElementsByClassName("originalmente2");
 
-function botonejecutar(user1, user2, color1, color2)
+function botonejecutar(user1, user2)
 {
+	color2 = (darkmode != true) ? "#f5f6f6" : color2;
 	//CSS COLORES
-	botonusuario1.style.backgroundColor = color1;
-	botonusuario2.style.backgroundColor = color2;
+	botonusuario1.style.backgroundColor = (botonusuario1.style.backgroundColor != color2) ? color2 : color1;
+	botonusuario2.style.backgroundColor = (botonusuario2.style.backgroundColor != color1) ? color1 : color2;
 
 	//CAMBIANDO DE LUGARES LOS MENSAJES
 	for(var i = 0; i<=mensajes_usuario1.length-1; i++)
@@ -130,54 +135,10 @@ function botonejecutar(user1, user2, color1, color2)
 var darkmode = true;
 var marco_es_gay = true;
 
-//NO PUEDODOOOOO
+//DARK MODE and LIGHT MODE
 function switchthemes()
 {
-	if(darkmode == true)
-	{
-		console.log("PRIMERA VEZ")
-
-		$("div.message" ).find( "p" ).css( "background-color", "#d9fdd3");
-		//FONDO DEL CHAT
-		$("div.rightSide").css("background-color", "#efeae2");
-		$("div.rightSide").css("background-image", "url(images/pattern.png)");
-		$("div.rightSide").css("content", "''")
-		$("div.rightSide").css("position", "absolute")
-		$("div.rightSide").css("top", "0")
-		$("div.rightSide").css("left", "0")
-		//$("div.container.rightside").css("background", "url(images/pattern.png")
-		$("div.rightSide").css("opacity", "1")
-
-		$("div.header").css("background-color", "#f0f2f5");
-		$("button.button1").css("background-color", "#06cf9c");
-		$("div.message" ).find( "p" ).css( "color", "#111b21" );
-
-		$("button.button3").css("background-color", "#f0f2f5");
-		$("button.button4").css("background-color", "#f0f2f5");
-
-		document.getElementById("botonsillomodos").textContent = "Dark Mode";
-		darkmode = false;
-	}
-	else if(darkmode == false)
-	{
-		console.log("SEGUNDA VEZ");
-
-		$("div.message" ).find( "p" ).css( "background-color", "#005c4b");
-		//FONDO DEL CHAT
-		//$("div.chatbox").css("background-image", "url(images/pattern.png)", "opacity: 0.06");
-		$('head').append("<style>.chatbox:before { opacity:0.6; }</style>");
-		$("div.rightSide").css("background-color", "#0b141a");
-
-		$("div.header").css("background-color", "#202c33");
-		$("button.button1").css("background-color", "#00a884");
-		$("div.message" ).find( "p" ).css( "color", "#111b21" );
-		$(this).css('background', 'linear-gradient(135deg, #d9fdd3 0%, #d9fdd3 50%, transparent 50%, transparent');
-
-		$("button.button3").css("background-color", "#005c4b");
-		$("button.button4").css("background-color", "#005c4b");
-
-		document.getElementById("botonsillomodos").textContent = "Dark Mode";
-
-		darkmode = true;
-	}
+	darkmode = (darkmode == true) ? false : true;
+	color2 = (darkmode == false) ? "#f5f6f6" : color2;
+	//container.classList.toggle("lightmode");
 }

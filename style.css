@@ -1,3 +1,45 @@
+:root {
+  --obscure: #202c33;
+  --friend-msg-color: #202c33;
+  --dark-green: #005c4b;
+  --chatbox-background: #00a884 ;
+  --almost-black: #0b141a;
+  --very-obscure-green: #182229;
+  --fingwhite: white;
+  --textofmessages: #e9edef;
+  --button-background: #06cf9c;
+  --image-pattern: url("images/pattern_darkmode.png");
+  --button-text-colors: white;
+}
+
+.dark-mode {
+  --obscure: #202c33;
+  --friend-msg-color: #202c33;
+  --dark-green: #005c4b;
+  --chatbox-background: #00a884 ;
+  --almost-black: #0b141a;
+  --very-obscure-green: #182229;
+  --fingwhite: white;
+  --textofmessages: #e9edef;
+  --button-background: #06cf9c;
+  --image-pattern: url("images/pattern_darkmode.png");
+  --button-text-colors: white;
+}
+
+.light-mode {
+  --obscure: #f5f6f6;
+  --friend-msg-color: #ffffff;
+  --dark-green: #d9fdd3;
+  --chatbox-background: #00a884 ;
+  --almost-black: white;
+  --very-obscure-green: #f0f2f5;
+  --fingwhite: white;
+  --textofmessages: #111b21;
+  --button-background: #06cf9c;
+  --image-pattern: url("images/pattern_lightmode.png");
+  --button-text-colors: #111b21;
+}
+
 * { /*Estilos en general*/
   margin: 0;
   padding: 0;
@@ -11,10 +53,10 @@ body { /*fondo fondo verde*/
   align-items: center;
   min-height: 100vh;
   background: linear-gradient(
-    #00a884 0%,
-    #00a884 130px,
-    #182229 130px,
-    #182229 100%
+    var(--chatbox-background) 0%, /*00a884*/
+    var(--chatbox-background) 130px, /*00a884*/
+    var(--very-obscure-green) 130px, /*182229*/
+    var(--very-obscure-green) 100%  /*182229*/
   );
 }
 
@@ -23,7 +65,7 @@ body { /*fondo fondo verde*/
   width: 1298px;
   max-width: 100%;
   height: calc(100vh - 40px);
-  background: #fff;
+  background: #fff; /*#fff*/
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
   display: flex;
 }
@@ -31,7 +73,7 @@ body { /*fondo fondo verde*/
 .rightSide { /*Estilizador del fondo del chat*/
   position: relative;
   flex: 70%;
-  background: #0b141a;
+  background: var(--almost-black); /*0b141a*/
 }
 
 .rightSide::before { /*Imagen del fondo del chat*/
@@ -41,7 +83,7 @@ body { /*fondo fondo verde*/
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("images/pattern.png");
+  background: var(--image-pattern);
   opacity: 0.06;
 }
 
@@ -49,7 +91,7 @@ body { /*fondo fondo verde*/
   position: relative;
   width: 100%;
   height: 80px; /*originalmente 60px*/
-  background: #202c33;
+  background: var(--obscure); /*202c33*/
   display:inline-block;
   justify-content: space-between;
   align-items: center;
@@ -97,10 +139,11 @@ body { /*fondo fondo verde*/
   text-align: left;
   max-width: 500px;
   padding: 12px;
-  background: #005c4b;
+  background: var(--dark-green); /*^005c4b*/
   border-radius: 10px;
   font-size: 0.9em;
-  color: #e9edef;
+  color: var(--textofmessages);
+  font-family: Segoe UI;
 }
 
 .message p::before { /*triangulito al lado de los mensajes*/
@@ -112,8 +155,8 @@ body { /*fondo fondo verde*/
   height: 20px;
   background: linear-gradient(
     135deg,
-    #005c4b 0%,
-    #005c4b 50%,
+    var(--dark-green) 0%, /*^005c4b*/
+    var(--dark-green) 50%, /*^005c4b*/
     transparent 50%,
     transparent
   );
@@ -135,7 +178,7 @@ body { /*fondo fondo verde*/
 }
 
 .friend_msg p { /*se asegura de poner blanco los mensajes del usuario2*/
-  background: #202c33;
+  background: var(--friend-msg-color); /*202c33*/
   text-align: left;
 }
 
@@ -148,8 +191,8 @@ body { /*fondo fondo verde*/
   height: 20px;
   background: linear-gradient(
     225deg,
-    #202c33 0%,
-    #202c33 50%,
+    var(--friend-msg-color) 0%, /*202c33*/
+    var(--friend-msg-color) 50%, /*202c33*/
     transparent 50%,
     transparent
   );
@@ -158,7 +201,7 @@ body { /*fondo fondo verde*/
 /*botones del contenedor*/
 .button1 {
   border-radius: 10px;
-  background-color: #00a884;
+  background-color: var(--chatbox-background); /*00a884*/
   border: none;
   font-size: 20px;
   padding-top: 15px;
@@ -178,7 +221,7 @@ body { /*fondo fondo verde*/
 input[type="file"]::-webkit-file-upload-button {
   position: absolute;
   border-radius: 10px;
-  background-color: #00a884;
+  background-color: var(--chatbox-background); /*00a884*/
   border: none;
   color: white;
   text-align: center;
@@ -199,11 +242,11 @@ input[type="file"]::-webkit-file-upload-button {
 
 /*doble boton*/
 .button3 {
-  background-color: #005c4b; /* Green */
-  border: 1px solid #005c4b;
+  background-color: var(--button-background); /*^005c4b*/
+  border: 1px solid var(--button-background); /*^005c4b*/
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
-  color: white;
+  color: var(--button-text-colors);
   height: 50px;
   width: 24.5%;
   font-size: 16px;
@@ -216,11 +259,11 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .button4 {
-  background-color: #202c33; /* Green */
-  border: 1px solid #005c4b;
+  background-color: var(--obscure); /*202c33*/
+  border: 1px solid var(--button-background); /*^005c4b*/
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-  color: white;
+  color: var(--button-text-colors);
   height: 50px;
   width: 24.5%;
   font-size: 16px;
