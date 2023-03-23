@@ -1,3 +1,4 @@
+/*Configuración de colores*/
 :root {
   --obscure: #202c33;
   --friend-msg-color: #202c33;
@@ -7,8 +8,8 @@
   --very-obscure-green: #182229;
   --fingwhite: white;
   --textofmessages: #e9edef;
-  --button-background: #06cf9c;
-  --image-pattern: url("images/pattern.png");
+  --selected-button-background: #06cf9c;
+  --unselected-button-background: #202c33;
   --button-text-colors: white;
   --opacity-value: 0.06;
 }
@@ -22,8 +23,8 @@
   --very-obscure-green: #182229;
   --fingwhite: white;
   --textofmessages: #e9edef;
-  --button-background: #06cf9c;
-  --image-pattern: url("images/pattern.png");
+  --selected-button-background: #06cf9c;
+  --unselected-button-background: #202c33;
   --button-text-colors: white;
   --opacity-value: 0.06;
 }
@@ -37,10 +38,18 @@
   --very-obscure-green: #f0f2f5;
   --fingwhite: white;
   --textofmessages: #111b21;
-  --button-background: #06cf9c;
-  --image-pattern: url("images/pattern.png");
+  --selected-button-background: #06cf9c;
+  --unselected-button-background: #f0f2f5;
   --button-text-colors: #111b21;
   --opacity-value: 0.4;
+}
+
+.selectedButton {
+  --colorback: var(--selected-button-background);
+}
+
+.unSelectedButton {
+  --colorback: var(--unselected-button-background);
 }
 
 * { /*Estilos en general*/
@@ -86,7 +95,7 @@ body { /*fondo fondo verde*/
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--image-pattern);
+  background: url("images/pattern.png");
   opacity: var(--opacity-value);
 }
 
@@ -245,8 +254,8 @@ input[type="file"]::-webkit-file-upload-button {
 
 /*doble boton*/
 .button3 {
-  background-color: var(--button-background); /*06cf9c*/
-  border: 1px solid var(--button-background); /*06cf9c*/
+  background-color: var(--colorback); /*06cf9c*/
+  border: 1px solid var(--selected-button-background); /*06cf9c*/
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   color: var(--button-text-colors);
@@ -262,8 +271,8 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .button4 {
-  background-color: var(--obscure); /*202c33*/
-  border: 1px solid var(--button-background); /*06cf9c*/
+  background-color: var(--colorback); /*202c33*/
+  border: 1px solid var(--selected-button-background); /*06cf9c*/
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   color: var(--button-text-colors);

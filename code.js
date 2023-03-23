@@ -115,8 +115,10 @@ var mensajes_usuario2 = document.getElementsByClassName("originalmente2");
 function botonejecutar(user1, user2)
 {
 	//CSS COLORES BOTONES
-	botonusuario1.style.backgroundColor = (botonusuario1.style.backgroundColor == color2) ? color1 : color2;
-	botonusuario2.style.backgroundColor = (botonusuario2.style.backgroundColor == color1) ? color2 : color1;
+	botonusuario1.classList.toggle("selectedButton");
+	botonusuario1.classList.toggle("unSelectedButton");
+	botonusuario2.classList.toggle("selectedButton");
+	botonusuario2.classList.toggle("unSelectedButton");
 
 	//CAMBIANDO DE LUGARES LOS MENSAJES
 	for(var i = 0; i<=mensajes_usuario1.length-1; i++)
@@ -131,14 +133,11 @@ function botonejecutar(user1, user2)
 	}
 }
 
-var darkmode = true;
-var marco_es_gay = true;
-
 //DARK MODE and LIGHT MODE
 function switchthemes()
 {
-	darkmode = (darkmode == true) ? false : true;
-	color2 = (darkmode == false) ? "rgb(245, 246, 246)" : color2; //#f5f6f6
 	container.classList.toggle("lightmode");
 	container.classList.toggle("darkmode");
+	document.body.classList.toggle("lightmode");
+	document.body.classList.toggle("darkmode");
 }
