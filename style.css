@@ -8,8 +8,9 @@
   --fingwhite: white;
   --textofmessages: #e9edef;
   --button-background: #06cf9c;
-  --image-pattern: url("images/pattern_darkmode.png");
+  --image-pattern: url("images/pattern.png");
   --button-text-colors: white;
+  --opacity-value: 0.06;
 }
 
 .darkmode {
@@ -22,8 +23,9 @@
   --fingwhite: white;
   --textofmessages: #e9edef;
   --button-background: #06cf9c;
-  --image-pattern: url("images/pattern_darkmode.png");
+  --image-pattern: url("images/pattern.png");
   --button-text-colors: white;
+  --opacity-value: 0.06;
 }
 
 .lightmode {
@@ -31,13 +33,14 @@
   --friend-msg-color: #ffffff;
   --dark-green: #d9fdd3;
   --chatbox-background: #00a884 ;
-  --almost-black: white;
+  --almost-black: #efeae2;
   --very-obscure-green: #f0f2f5;
   --fingwhite: white;
   --textofmessages: #111b21;
   --button-background: #06cf9c;
-  --image-pattern: url("images/pattern_lightmode.png");
+  --image-pattern: url("images/pattern.png");
   --button-text-colors: #111b21;
+  --opacity-value: 0.4;
 }
 
 * { /*Estilos en general*/
@@ -84,7 +87,7 @@ body { /*fondo fondo verde*/
   width: 100%;
   height: 100%;
   background: var(--image-pattern);
-  opacity: 0.06;
+  opacity: var(--opacity-value);
 }
 
 .header { /*parte de arriba, la usaré para hacer los botones de cambiar de vista de usuario, escoger archivos y cambiar idioma*/
