@@ -1,19 +1,4 @@
 /*Configuración de colores*/
-:root {
-  --obscure: #202c33;
-  --friend-msg-color: #202c33;
-  --dark-green: #005c4b;
-  --chatbox-background: #00a884 ;
-  --almost-black: #0b141a;
-  --very-obscure-green: #182229;
-  --fingwhite: white;
-  --textofmessages: #e9edef;
-  --selected-button-background: #06cf9c;
-  --unselected-button-background: #202c33;
-  --button-text-colors: white;
-  --opacity-value: 0.06;
-}
-
 .darkmode {
   --obscure: #202c33;
   --friend-msg-color: #202c33;

@@ -8,8 +8,6 @@ var nombreusuario2 = ""; //el nombre del usuario2
 var nombreusuario1encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario1
 var nombreusuario2encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario2
 var darkmode = true; //true dark, false light
-var color1 = "rgb(6, 207, 156)"; //"#06cf9c";
-var color2 = "rgb(32, 44, 51)";//"#202c33";
 
 document.getElementById('inputfile').addEventListener('change', function() { //escucha cuando un archivo se sube al boton de subir archivo
               
@@ -112,13 +110,13 @@ function crear_div_mensaje(contenido, hora, horario, fecha, usuariooriginal, usu
 var mensajes_usuario1 = document.getElementsByClassName("originalmente1");
 var mensajes_usuario2 = document.getElementsByClassName("originalmente2");
 
-function botonejecutar(user1, user2)
+function botonejecutar(user1, user2, select, unselect)
 {
 	//CSS COLORES BOTONES
-	botonusuario1.classList.toggle("selectedButton");
-	botonusuario1.classList.toggle("unSelectedButton");
-	botonusuario2.classList.toggle("selectedButton");
-	botonusuario2.classList.toggle("unSelectedButton");
+	select.classList.add("selectedButton");
+	select.classList.remove("unSelectedButton");
+	unselect.classList.add("unSelectedButton");
+	unselect.classList.remove("SelectedButton");
 
 	//CAMBIANDO DE LUGARES LOS MENSAJES
 	for(var i = 0; i<=mensajes_usuario1.length-1; i++)
@@ -134,10 +132,14 @@ function botonejecutar(user1, user2)
 }
 
 //DARK MODE and LIGHT MODE
+const theme_button = document.getElementById("botonsillomodos");
+var darkmode = true;
 function switchthemes()
 {
+	theme_button.innerText = (darkmode == true) ? "Dark Mode" : "Light Mode";
 	container.classList.toggle("lightmode");
 	container.classList.toggle("darkmode");
 	document.body.classList.toggle("lightmode");
 	document.body.classList.toggle("darkmode");
+	darkmode = (darkmode == true) ? false : true;
 }
