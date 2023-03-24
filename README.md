@@ -1,4 +1,4 @@
-# WhatsApp-Chatlog-Interpreter
+# WhatScanner
 An interpreter that lets you read WhatsApp chatlog conversations in a nice, well structured, Whatsapp-like chatbox
 
 # How to use
