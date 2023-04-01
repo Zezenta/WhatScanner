@@ -1,13 +1,19 @@
 const botonusuario1 = document.getElementById("botonusuario1");
 const botonusuario2 = document.getElementById("botonusuario2");
 const container = document.getElementById("containerid");
+
 var lineas;
 var seguirciclo = true;
 var nombreusuario1 = ""; //el nombre del usuario1
 var nombreusuario2 = ""; //el nombre del usuario2
+
 var nombreusuario1encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario1
 var nombreusuario2encontrado = false; //es para ver si tengo que volver a buscar el nombre del usuario2
+
 var darkmode = true; //true dark, false light
+
+var media_omitted = ["Multimedia omitido", "Media omitted"];
+var file_attached = ["archivo adjunto", "file attached"];
 
 document.getElementById('inputfile').addEventListener('change', function() { //escucha cuando un archivo se sube al boton de subir archivo
               
