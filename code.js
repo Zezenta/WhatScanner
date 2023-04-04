@@ -2,6 +2,9 @@ const botonusuario1 = document.getElementById("botonusuario1");
 const botonusuario2 = document.getElementById("botonusuario2");
 const container = document.getElementById("containerid");
 
+var lan = "es";
+
+
 var lineas;
 var seguirciclo = true;
 var nombreusuario1 = ""; //el nombre del usuario1
@@ -30,7 +33,8 @@ function iniciar_renderizado()
 {
 	while(seguirciclo == true)
 	{
-		var lineacomprobada = lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([\+A-zÀ-ÿ\s\d]+):\s(.*)/); //la documentación del regex es, 1 para la fecha completa, 2 para el día, 3 para el mes, 4 para el año, 5 para la hora, 6 para el horario de hora, 7 para el usuario, y 8 para el contenido del mensaje
+		var lineacomprobada = (lan == "es") ? lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([\+A-zÀ-ÿü\s\d]+):\s(.*)/) : lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4})),\s(\d{1,2}:\d{1,2})\s([ap]m)\s-\s([\+A-zÀ-ÿü\s\d]+):\s(.*)/); //la documentación del regex es, 1 para la fecha completa, 2 para el día, 3 para el mes, 4 para el año, 5 para la hora, 6 para el horario de hora, 7 para el usuario, y 8 para el contenido del mensaje
+		console.log(lineacomprobada)
 		let usuariomensajeoriginal = ""; //para contrl de tags luego
 		var usuariomensajetag = ""; //para control de tags luego
 		let fechamensaje = lineacomprobada[1]; //fecha
@@ -67,7 +71,7 @@ function iniciar_renderizado()
 			{
 				try
 				{
-					regex_prueba = lineas[iterador + 1].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([\+A-zÀ-ÿ\s\d]+):\s(.*)/);
+					regex_prueba = (lan == "es") ? lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4}))\s(\d{1,2}:\d{1,2})\s([pa]\.\sm\.)\s-\s([\+A-zÀ-ÿü\s\d]+):\s(.*)/) : lineas[iterador].match(/((\d{1,2})\/(\d{1,2})\/(\d{1,4})),\s(\d{1,2}:\d{1,2})\s([ap]m)\s-\s([\+A-zÀ-ÿü\s\d]+):\s(.*)/); //la documentación del regex es, 1 para la fecha completa, 2 para el día, 3 para el mes, 4 para el año, 5 para la hora, 6 para el horario de hora, 7 para el usuario, y 8 para el contenido del mensaje
 				}
 				catch (error)
 				{
